@@ -1,3 +1,5 @@
+"use client";
+
 import ProductItem from "./ProductItem";
 import { Product } from "@/types";
 
