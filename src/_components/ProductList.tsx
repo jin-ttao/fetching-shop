@@ -1,11 +1,6 @@
-import Image from "next/image";
+import ProductItem from "./ProductItem";
 
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  image: string;
-}
+import { Product } from "@/types";
 
 async function fetchProductList() {
   const response = await fetch("https://fakestoreapi.com/products");
@@ -19,21 +14,7 @@ export default async function ProductList() {
   return (
     <main className="grid grid-cols-4 gap-4">
       {productList.map((item: Product) => (
-        <div
-          key={item.id}
-          className="flex flex-col gap-2 items-center justify-center border-2 border-gray-300 rounded-md p-4"
-        >
-          <Image
-            src={item.image}
-            alt={item.title}
-            width={100}
-            height={100}
-            className="w-[50%] h-auto"
-            priority
-          />
-          <span className="text-lg font-bold">{item.title}</span>
-          <span className="text-gray-500 line-through">{item.price}</span>
-        </div>
+        <ProductItem key={item.id} item={item} />
       ))}
     </main>
   );
