@@ -6,7 +6,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import Search from "./Search";
 import ProductItem from "./ProductItem";
 import { fetchProductList } from "@/api/fetchProductList";
-import { Product } from "@/types";
+import { ProductDetail } from "@/types";
 import { LIMIT } from "@/constants";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -39,7 +39,7 @@ export default function ProductList() {
       >
         <div className="grid grid-cols-4 gap-5">
           {productList?.pages.map((page) =>
-            page.map((item: Product) => <ProductItem key={item.id} item={item} />)
+            page.map((item: ProductDetail) => <ProductItem key={item.id} item={item} />)
           )}
         </div>
         {error && <span>Error: {error.message}</span>}
