@@ -6,6 +6,7 @@ import ProductItem from "./ProductItem";
 import { fetchProductList } from "@/api/fetchProductList";
 import { Product } from "@/types";
 import { LIMIT } from "@/constants";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 interface ProductListProps {
   initialProductList: Product[];
@@ -16,6 +17,8 @@ export default function ProductList({ initialProductList }: ProductListProps) {
     data: productList,
     isLoading,
     error,
+    fetchNextPage,
+    hasNextPage,
   } = useInfiniteQuery({
     queryKey: ["productList"],
     queryFn: ({ pageParam = 1 }) => fetchProductList(pageParam),
@@ -33,10 +36,20 @@ export default function ProductList({ initialProductList }: ProductListProps) {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <main className="grid grid-cols-4 gap-4">
-      {productList.pages.map((page) =>
-        page.map((item: Product) => <ProductItem key={item.id} item={item} />)
-      )}
+    <main className="p-10">
+      <InfiniteScroll
+        dataLength={productList.pages.length}
+        next={fetchNextPage}
+        hasMore={hasNextPage}
+        loader={<span>Loading...</span>}
+        endMessage={<span>end</span>}
+      >
+        <div className="grid grid-cols-4 gap-5">
+          {productList.pages.map((page) =>
+            page.map((item: Product) => <ProductItem key={item.id} item={item} />)
+          )}
+        </div>
+      </InfiniteScroll>
     </main>
   );
 }
