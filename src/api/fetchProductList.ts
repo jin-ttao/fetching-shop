@@ -1,7 +1,7 @@
 import { Product } from "@/types";
+import { LIMIT } from "@/constants";
 
 const BASE_URL: string = "https://api.escuelajs.co/api/v1";
-const LIMIT: number = 12;
 
 export async function fetchProductList(pageParam: number): Promise<Product[]> {
   try {
