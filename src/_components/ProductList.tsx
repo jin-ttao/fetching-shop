@@ -1,18 +1,42 @@
 "use client";
 
-import ProductItem from "./ProductItem";
-import { Product } from "@/types";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
-interface ProductListProps {  
+import ProductItem from "./ProductItem";
+import { fetchProductList } from "@/api/fetchProductList";
+import { Product } from "@/types";
+import { LIMIT } from "@/constants";
+
+interface ProductListProps {
   initialProductList: Product[];
 }
 
 export default function ProductList({ initialProductList }: ProductListProps) {
+  const {
+    data: productList,
+    isLoading,
+    error,
+  } = useInfiniteQuery({
+    queryKey: ["productList"],
+    queryFn: ({ pageParam = 1 }) => fetchProductList(pageParam),
+    initialPageParam: 2,
+    getNextPageParam: (lastPage, pages) => {
+      return lastPage.length === LIMIT ? pages.length + 1 : undefined;
+    },
+    initialData: {
+      pages: [initialProductList],
+      pageParams: [1],
+    },
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
   return (
     <main className="grid grid-cols-4 gap-4">
-      {initialProductList.map((item: Product) => (
-        <ProductItem key={item.id} item={item} />
-      ))}
+      {productList.pages.map((page) =>
+        page.map((item: Product) => <ProductItem key={item.id} item={item} />)
+      )}
     </main>
   );
 }
