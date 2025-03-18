@@ -9,7 +9,7 @@ export default function ProductItem({ item }: { item: Product }) {
       className="flex flex-col gap-2 items-center justify-center border-2 border-gray-300 rounded-md p-4"
     >
       <Image
-        src={item.image}
+        src={item.images[0]}
         alt={item.title}
         width={100}
         height={100}
