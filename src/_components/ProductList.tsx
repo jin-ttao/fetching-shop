@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
+import Search from "./Search";
 import ProductItem from "./ProductItem";
 import { fetchProductList } from "@/api/fetchProductList";
 import { Product } from "@/types";
@@ -9,6 +11,7 @@ import { LIMIT } from "@/constants";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function ProductList() {
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const {
     data: productList,
     isLoading,
@@ -16,8 +19,8 @@ export default function ProductList() {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery({
-    queryKey: ["productList"],
-    queryFn: ({ pageParam = 0 }) => fetchProductList(pageParam),
+    queryKey: ["productList", searchQuery],
+    queryFn: ({ pageParam = 0 }) => fetchProductList(pageParam, searchQuery),
     initialPageParam: 0,
     getNextPageParam: (lastPage, pages) => {
       return lastPage.length === LIMIT ? pages.length : undefined;
@@ -26,6 +29,7 @@ export default function ProductList() {
 
   return (
     <main className="p-10">
+      <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <InfiniteScroll
         dataLength={productList?.pages.length ?? 0}
         next={fetchNextPage}
