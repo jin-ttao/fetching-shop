@@ -1,5 +1,12 @@
 import Image from "next/image";
 
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  image: string;
+}
+
 async function fetchProductList() {
   const response = await fetch("https://fakestoreapi.com/products");
   const productList = await response.json();
@@ -12,7 +19,7 @@ export default async function Home() {
   return (
     <div>
       <main className="grid grid-cols-4 gap-4">
-        {productList.map((item) => (
+        {productList.map((item: Product) => (
           <div
             key={item.id}
             className="flex flex-col gap-2 items-center justify-center border-2 border-gray-300 rounded-md p-4"
