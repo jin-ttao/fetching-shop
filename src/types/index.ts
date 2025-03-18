@@ -4,3 +4,8 @@ export interface Product {
   price: number;
   images: string[];
 }
+
+export interface ProductDetail extends Product {
+  discountRate: number;
+  stock: number;
+}
