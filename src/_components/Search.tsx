@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { Product } from "@/types";
+import { useDebounce } from "@/hooks/useDebounce";
 
 interface SearchProps {
   searchQuery: string;
@@ -13,13 +14,17 @@ export default function Search({ searchQuery, setSearchQuery }: SearchProps) {
   const [inputValue, setInputValue] = useState<string>(searchQuery);
   const [options, setOptions] = useState<{ id: number; title: string }[]>([]);
   const [isOpenOptions, setIsOpenOptions] = useState<boolean>(false);
+  const debouncedSearchQuery = useDebounce({
+    value: inputValue,
+    delay: 1000,
+  });
 
   useEffect(() => {
-    if (inputValue.length > 0) {
+    if (debouncedSearchQuery.length > 0) {
       const fetchOptions = async () => {
         try {
           const response = await fetch(
-            `https://api.escuelajs.co/api/v1/products?title=${inputValue}`
+            `https://api.escuelajs.co/api/v1/products?title=${debouncedSearchQuery}`
           );
           const data = await response.json();
           setOptions(
@@ -36,7 +41,7 @@ export default function Search({ searchQuery, setSearchQuery }: SearchProps) {
       };
       fetchOptions();
     }
-  }, [inputValue]);
+  }, [debouncedSearchQuery]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
