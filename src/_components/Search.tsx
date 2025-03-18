@@ -16,7 +16,7 @@ export default function Search({ searchQuery, setSearchQuery }: SearchProps) {
   const [isOpenOptions, setIsOpenOptions] = useState<boolean>(false);
   const debouncedSearchQuery = useDebounce({
     value: inputValue,
-    delay: 1000,
+    delay: 500,
   });
 
   useEffect(() => {
