@@ -5,6 +5,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 
 import Search from "./Search";
 import ProductItem from "./ProductItem";
+import Toggle from "./Toggle";
 import { fetchProductList } from "@/api/fetchProductList";
 import { ProductDetail } from "@/types";
 import { LIMIT } from "@/constants";
@@ -29,7 +30,10 @@ export default function ProductList() {
 
   return (
     <main className="p-10">
-      <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <div className="flex items-center justify-between">
+        <Toggle />
+        <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      </div>
       <InfiniteScroll
         dataLength={productList?.pages.length ?? 0}
         next={fetchNextPage}
