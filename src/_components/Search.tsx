@@ -62,17 +62,20 @@ export default function Search({ searchQuery, setSearchQuery }: SearchProps) {
   };
 
   return (
-    <div>
+    <div className="relative flex items-center">
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={inputValue}
-          className="relative w-[20vw] h-10 border-2 border-gray-300 rounded px-2"
-          onChange={handleInputChange}
-        />
+        <label htmlFor="search" className="relative">
+          <span className="mr-3">Search</span>
+          <input
+            type="text"
+            value={inputValue}
+            className="w-[20vw] h-10 border-2 border-gray-300 rounded px-2"
+            onChange={handleInputChange}
+          />
+        </label>
       </form>
       {inputValue && isOpenOptions && options.length > 0 && (
-        <div className="absolute top-20 left-10 w-[20vw] h-[30vh] overflow-y-auto bg-white border-2 border-gray-300 rounded">
+        <div className="absolute top-10 right-0 w-[20vw] h-[30vh] overflow-y-auto bg-white border-2 border-gray-300 rounded">
           {options.map((option) => (
             <div
               key={option.id}
