@@ -35,12 +35,17 @@ export default function ProductList() {
       });
     },
   });
+  const filteredProductIdList = productList?.map((product) => product.id);
 
   return (
     <main className="p-10">
       <div className="flex items-center justify-between">
         <Toggle filter={filter} setFilter={setFilter} />
-        <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <Search
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          filteredProductIdList={filteredProductIdList ?? []}
+        />
       </div>
       <InfiniteScroll
         dataLength={productList?.length ?? 0}

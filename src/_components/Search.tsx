@@ -8,9 +8,14 @@ import { useDebounce } from "@/hooks/useDebounce";
 interface SearchProps {
   searchQuery: string;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+  filteredProductIdList: number[];
 }
 
-export default function Search({ searchQuery, setSearchQuery }: SearchProps) {
+export default function Search({
+  searchQuery,
+  setSearchQuery,
+  filteredProductIdList,
+}: SearchProps) {
   const [inputValue, setInputValue] = useState<string>(searchQuery);
   const [options, setOptions] = useState<{ id: number; title: string }[]>([]);
   const [isOpenOptions, setIsOpenOptions] = useState<boolean>(false);
@@ -27,11 +32,14 @@ export default function Search({ searchQuery, setSearchQuery }: SearchProps) {
             `https://api.escuelajs.co/api/v1/products?title=${debouncedSearchQuery}`
           );
           const data = await response.json();
+          const filteredData = data.filter((product: Product) =>
+            filteredProductIdList.includes(product.id)
+          );
           setOptions(
-            data.map((item: Product) => {
+            filteredData.map((product: Product) => {
               return {
-                id: item.id,
-                title: item.title,
+                id: product.id,
+                title: product.title,
               };
             })
           );
