@@ -9,3 +9,7 @@ export interface ProductDetail extends Product {
   discountRate: number;
   stock: number;
 }
+
+export interface Filter {
+  showAllProducts: boolean;
+}
