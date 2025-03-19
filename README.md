@@ -1,4 +1,4 @@
-# 과제: Fecthing Shop 프로젝트 🎁
+# 과제: Fetching Shop 프로젝트 🎁
 
 > Frontend Engineer 지원자: 송진태
 
@@ -6,7 +6,7 @@
 
 # 1. 프로젝트 개요
 
-Fecthing Shop은 다양한 해외 상품을 둘러보고 원하는 조건에 맞는 상품을 찾을 수 있는 서비스입니다. 상품 목록 조회(offset 기반 페이지네이션), 검색, 필터링을 주요 기능으로 제공합니다.
+Fetching Shop은 다양한 해외 상품을 둘러보고 원하는 조건에 맞는 상품을 찾을 수 있는 서비스입니다. 상품 목록 조회(offset 기반 페이지네이션), 검색, 필터링을 주요 기능으로 제공합니다.
 
 <img src="https://i.imgur.com/lEzA4cE.png" alt="홈 화면" />
 <span style="color: gray; font-size: 0.9rem;">구현 화면</span>
