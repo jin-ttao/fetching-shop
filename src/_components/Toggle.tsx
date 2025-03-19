@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { Filter } from "@/types";
 
-export default function Toggle() {
-  const [isChecked, setIsChecked] = useState(false);
+interface ToggleProps {
+  filter: Filter;
+  setFilter: React.Dispatch<React.SetStateAction<Filter>>;
+}
 
+export default function Toggle({ filter, setFilter }: ToggleProps) {
   const handleToggleChange = () => {
-    setIsChecked((prev) => !prev);
+    setFilter({ showAllProducts: !filter.showAllProducts });
   };
 
   return (
@@ -15,17 +18,19 @@ export default function Toggle() {
         type="checkbox"
         id="toggle"
         className="hidden"
-        checked={isChecked}
+        checked={filter.showAllProducts}
         onChange={handleToggleChange}
       />
       <label
         htmlFor="toggle"
         className={`cursor-pointer w-12 h-6 flex items-center rounded-full p-1 ${
-          isChecked ? "bg-blue-500" : "bg-gray-500"
+          filter.showAllProducts ? "bg-blue-500" : "bg-gray-500"
         }`}
       >
         <div
-          className={`w-4 h-4 bg-white rounded-full shadow-md transform duration-300 ease-in-out ${isChecked ? "translate-x-6" : ""}`}
+          className={`w-4 h-4 bg-white rounded-full shadow-md transform duration-300 ease-in-out ${
+            filter.showAllProducts ? "translate-x-6" : ""
+          }`}
         ></div>
       </label>
       <span className="pl-2 text-md font-semibold text-gray-600">All Products</span>
